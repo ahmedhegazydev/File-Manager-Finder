@@ -1,0 +1,101 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragSdcard0"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:padding="1dp"
+    android:weightSum="100"
+    tools:context=".fragment.FragmentSdCard0">
+
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:id="@+id/rl1"
+       >
+       <TextView
+           android:id="@+id/tvPath"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_margin="1dp"
+           android:background="@drawable/rounded_tv"
+           android:padding="10dp"
+           android:text="Ahmed"
+           android:textColor="@android:color/holo_red_light"
+           android:textSize="20sp"
+           android:textStyle="bold"
+
+
+
+           />
+           <ImageView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:scaleType="centerCrop"
+               android:src="@drawable/back"
+               android:layout_alignParentEnd="true"
+               android:layout_margin="5dp"
+               android:id="@+id/ivBack"
+               android:layout_centerVertical="true"
+
+               />
+
+   </RelativeLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:layout_below="@id/rl1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="99"
+        android:padding="5dp"
+        android:animateLayoutChanges="true"
+        android:id="@+id/mainContainer"
+        android:soundEffectsEnabled="true"
+
+
+/>
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/menu_green"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        fab:menu_icon="@drawable/ic_star"
+        fab:menu_animationDelayPerItem="0"
+        fab:menu_colorNormal="#43A047"
+        fab:menu_colorPressed="#2E7D32"
+        fab:menu_colorRipple="#1B5E20"
+        fab:menu_labels_maxLines="2"
+        fab:menu_labels_ellipsize="end">
+
+        <com.github.clans.fab.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_edit"
+            fab:fab_label="Create Folder"
+            style="@style/MenuButtonsSmall.Green" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_edit"
+            fab:fab_label="Create File"
+            style="@style/MenuButtonsSmall.Green" />
+
+        <!--<com.github.clans.fab.FloatingActionButton-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:src="@drawable/ic_edit"-->
+            <!--fab:fab_label="Menu item 3"-->
+            <!--style="@style/MenuButtonsSmall.Green" />-->
+
+    </com.github.clans.fab.FloatingActionMenu>
+
+
+
+</RelativeLayout>

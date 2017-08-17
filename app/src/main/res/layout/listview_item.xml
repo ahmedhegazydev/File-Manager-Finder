@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="#EEA"
+    android:padding="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/folder"
+        android:scaleType="centerCrop"
+        android:layout_margin="5dp"
+        android:layout_centerVertical="true"
+        android:id="@+id/ivAudioOrVideoOr"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ahmed"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        android:id="@+id/tvName"
+        android:layout_toRightOf="@id/ivAudioOrVideoOr"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="Ahmed"
+        android:id="@+id/tvDate"
+        android:layout_below="@id/tvName"
+        android:layout_toRightOf="@id/ivAudioOrVideoOr"
+        />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/menu"
+        android:layout_margin="10dp"
+        android:id="@+id/ivOptions"
+        android:layout_alignParentEnd="true"
+
+        />
+
+</RelativeLayout>

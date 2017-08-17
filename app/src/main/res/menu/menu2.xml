@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        android:title="Home"
+        android:id="@+id/fileFinderHome"
+        />
+    <item
+        android:title="Sort"
+        android:id="@+id/fileFinderSort"
+        >
+        <menu>
+            <item
+                android:title="Sort By"
+                android:id="@+id/sortBy"
+                />
+            <item
+                android:title="Directory Sort Mode"
+                android:id="@+id/direcSortMode"
+                />
+        </menu>
+    </item>
+    <item
+        android:title="History"
+        android:id="@+id/fileFinderHistory"
+        />
+    <item
+        android:title="GridView"
+        android:id="@+id/fileFinderGridView"
+        />
+    <item
+        android:title="Set As Home"
+        android:id="@+id/fileFinderSetAsHome"
+        />
+    <item
+        android:title="Exit"
+        android:id="@+id/fileFinderExit"
+
+        />
+    <!--<item-->
+        <!--android:title="Search"-->
+        <!--android:id="@+id/svSearchForFile"-->
+        <!--app:showAsAction="always"-->
+        <!--android:actionViewClass="android.widget.SearchView"-->
+        <!--android:icon="@android:drawable/ic_menu_search"-->
+
+        <!--/>-->
+
+
+</menu>

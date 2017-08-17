@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_sdCard0"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="sdCard0"
+
+        />
+    <item
+        android:id="@+id/nav_extSdCard"
+        android:icon="@drawable/ic_photo_library_black_24dp"
+        android:title="extSdCard" />
+
+
+    <!--<item android:title="Main Folders">-->
+        <!--<menu>-->
+            <item
+                android:id="@+id/nav_DCIM"
+                android:icon="@drawable/ic_local_movies_black_24dp"
+                android:title="DCIM" />
+
+            <item
+                android:id="@+id/nav_Download"
+                android:icon="@drawable/ic_notifications_black_24dp"
+                android:title="Downloads" />
+
+            <item
+                android:id="@+id/nav_Movies"
+                android:icon="@drawable/ic_settings_black_24dp"
+                android:title="Movies" />
+            <item
+                android:title="Music"
+                android:id="@+id/nav_music"
+                />
+            <item
+                android:title="Pictures"
+                android:id="@+id/nav_pictures"
+                />
+
+        <!--</menu>-->
+    <!--</item>-->
+
+    <!--<item android:title="Find All">-->
+        <!--<menu>-->
+            <item
+                android:id="@+id/nav_images"
+                android:title="Images" />
+            <item
+                android:id="@+id/nav_Videos"
+                android:title="Videos" />
+            <item
+                android:id="@+id/nav_Audio"
+                android:title="Audio" />
+            <item
+                android:id="@+id/nav_Docs"
+                android:title="Documents" />
+            <item
+                android:id="@+id/nav_apks"
+                android:title="Apks" />
+            <item
+                android:id="@+id/nav_quick_access"
+                android:title="Quick Access" />
+            <item
+                android:id="@+id/nav_recent_files"
+                android:title="Recent Files" />
+
+        <!--</menu>-->
+    <!--</item>-->
+
+</menu>
