@@ -24,15 +24,18 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import info.androidhive.navigationdrawer.R;
+import info.androidhive.navigationdrawer.fragment.FragmentAudio;
 import info.androidhive.navigationdrawer.fragment.FragmentDcim;
 import info.androidhive.navigationdrawer.fragment.FragmentDownload;
 import info.androidhive.navigationdrawer.fragment.FragmentExtSdCard;
 import info.androidhive.navigationdrawer.fragment.FragmentForAnyPath;
+import info.androidhive.navigationdrawer.fragment.FragmentHistory;
 import info.androidhive.navigationdrawer.fragment.FragmentImages;
 import info.androidhive.navigationdrawer.fragment.FragmentMovies;
 import info.androidhive.navigationdrawer.fragment.FragmentMusic;
 import info.androidhive.navigationdrawer.fragment.FragmentPictures;
 import info.androidhive.navigationdrawer.fragment.FragmentSdCard0;
+import info.androidhive.navigationdrawer.fragment.FragmentVideos;
 import info.androidhive.navigationdrawer.other.CircleTransform;
 
 public class MainActivity extends AppCompatActivity {
@@ -234,7 +237,15 @@ public class MainActivity extends AppCompatActivity {
             case 7:
                 fragment = new FragmentImages();
                 break;
-
+            case 8:
+                fragment = new FragmentHistory();
+                break;
+            case 9:
+                fragment = new FragmentAudio();
+                break;
+            case 10:
+                fragment = new FragmentVideos();
+                break;
 //            case 3:
 //                fragment = new FragmentForAnyPath();
 //                Bundle bundle = new Bundle();
@@ -313,6 +324,18 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.nav_images:
                         navItemIndex = 7;
                         CURRENT_TAG = TAG_IMAGES;
+                        break;
+                    case R.id.nav_quick_access:
+                        navItemIndex = 8;
+                        CURRENT_TAG = TAG_QUICK_ACCESS;
+                        break;
+                    case R.id.nav_Audio:
+                        navItemIndex = 9;
+                        CURRENT_TAG = TAG_AUDIO;
+                        break;
+                    case R.id.nav_Videos:
+                        navItemIndex = 10;
+                        CURRENT_TAG = TAG_VIDEOS;
                         break;
 
 //                    case R.id.nav_about_us:

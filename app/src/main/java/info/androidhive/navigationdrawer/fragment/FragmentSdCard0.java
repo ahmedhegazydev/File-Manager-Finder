@@ -43,6 +43,7 @@ import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -52,6 +53,7 @@ import info.androidhive.navigationdrawer.R;
 import info.androidhive.navigationdrawer.activity.MainActivity;
 import info.androidhive.navigationdrawer.adapters.GridViewAdapter;
 import info.androidhive.navigationdrawer.adapters.ListViewAdapter;
+import info.androidhive.navigationdrawer.db.DbController;
 import info.androidhive.navigationdrawer.model.AnyItem;
 
 
@@ -383,7 +385,40 @@ public class FragmentSdCard0 extends Fragment implements GridView.OnItemClickLis
         //mainContainer.addView(createGridView());
         tvPath.setText(path);
 
+        //add path to db
+        insertPathIntoDb();
 
+    }
+
+    DbController dbController = null;
+    private void insertPathIntoDb() {
+        dbController = new DbController(context);
+        //add accessed paths to the database for used as history or quick access
+        String sql = "insert into "+ DbController.tblAccessedPaths+" ("+DbController.filePath+")" +
+                " values ('"+path+"')";
+        //Log.e("sql", sql);
+        try {
+            ArrayList<HashMap<String, String>> hashMaps = dbController.getData("select * from "+DbController.tblAccessedPaths);
+            if (hashMaps.isEmpty()){
+                dbController.exeQuery(sql);
+            }else{
+                //checking if the path already exist in the database
+                boolean exist = false;
+                for (int i = 0; i < hashMaps.size(); i++){
+                    HashMap<String, String> map = hashMaps.get(i);
+                    if (map.get(DbController.filePath).equals(path)){
+                       exist = true;
+                        break;
+                    }
+                }
+                if (!exist){
+                    dbController.exeQuery(sql);
+                }
+            }
+            //fireToast("inserted");
+        }catch(Exception e){
+            fireToast(e.getMessage().toString());
+        }
     }
 
     @Override

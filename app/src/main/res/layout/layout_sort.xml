@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:background="@drawable/round_view"
     android:padding="10dp"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+
+    >
 
 
     <TextView
@@ -12,17 +13,28 @@
         android:text="Sort By"
         android:textStyle="bold"
         android:textSize="30sp"
-        android:layout_margin="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+
         android:id="@+id/sort"
         android:textColor="@android:color/holo_green_dark"
         />
 
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/sort"
+    android:id="@+id/sort1"
+    android:tag="sort1"
+    >
     <RadioButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:id="@+id/rbName"
-        android:layout_below="@id/sort"
+        android:tag="sort1"
         />
     <TextView
         android:layout_width="wrap_content"
@@ -33,70 +45,92 @@
         android:textStyle="bold"
         android:layout_toRightOf="@id/rbName"
         android:layout_margin="10dp"
-        android:layout_below="@id/sort"
         android:id="@+id/tvName"
         />
+</RelativeLayout>
 <!---->
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:id="@+id/rbLastMod"
-        android:layout_below="@id/rbName"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Last Modified"
-        android:textColor="@android:color/black"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        android:layout_toRightOf="@id/rbName"
-        android:layout_margin="10dp"
-        android:layout_below="@id/tvName"
-        android:id="@+id/tvLastModified"
-        />
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_below="@id/sort1"
+       android:id="@+id/sort2"
+       android:tag="sort2"
+       >
+
+       <RadioButton
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_margin="10dp"
+           android:id="@+id/rbLastMod"
+android:tag="sort2"
+           />
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="Last Modified"
+           android:textColor="@android:color/black"
+           android:textSize="25sp"
+           android:textStyle="bold"
+           android:layout_toRightOf="@id/rbLastMod"
+           android:layout_margin="10dp"
+           android:id="@+id/tvLastModified"
+           />
+   </RelativeLayout>
     <!---->
 
-    <RadioButton
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:id="@+id/rbSize"
-        android:layout_below="@id/rbLastMod"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Size"
-        android:textColor="@android:color/black"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        android:layout_toRightOf="@id/rbName"
-        android:layout_margin="10dp"
-        android:layout_below="@id/tvLastModified"
-        android:id="@+id/tvSize"
-        />
+        android:layout_below="@id/sort2"
+        android:id="@+id/sort3"
+        android:tag="sort3"
+        >
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:id="@+id/rbSize"
+            android:tag="sort3"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Size"
+            android:textColor="@android:color/black"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:layout_toRightOf="@id/rbSize"
+            android:layout_margin="10dp"
+            android:id="@+id/tvSize"
+            />
+    </RelativeLayout>
     <!---->
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:id="@+id/rbType"
-        android:layout_below="@id/rbSize"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Type"
-        android:textColor="@android:color/black"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        android:layout_toRightOf="@id/rbType"
-        android:layout_margin="10dp"
-        android:layout_below="@id/tvSize"
-        android:id="@+id/tvType"
-        />
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_below="@id/sort3"
+       android:id="@+id/sort4"
+       android:tag="sort4"
+       >
+       <RadioButton
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_margin="10dp"
+           android:id="@+id/rbType"
+           android:tag="sort4"
+           />
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="Type"
+           android:textColor="@android:color/black"
+           android:textSize="25sp"
+           android:textStyle="bold"
+           android:layout_toRightOf="@id/rbType"
+           android:layout_margin="10dp"
+           android:id="@+id/tvType"
+           />
+   </RelativeLayout>
     <!---->
     <TextView
         android:layout_width="wrap_content"
@@ -106,10 +140,11 @@
         android:textSize="20sp"
         android:textStyle="bold|italic"
         android:id="@+id/desc"
-        android:layout_margin="10dp"
-        android:layout_below="@id/rbType"
-        android:textColor="@color/colorAccent"
+        android:layout_margin="15dp"
+        android:layout_below="@id/sort4"
+        android:textColor="#ff32"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
 
 
         />
@@ -121,10 +156,11 @@
         android:textSize="20sp"
         android:textStyle="bold|italic"
         android:id="@+id/asc"
-        android:layout_margin="10dp"
-        android:layout_below="@id/rbType"
-        android:textColor="@color/colorAccent"
+        android:layout_margin="15dp"
+        android:layout_below="@id/sort4"
+        android:textColor="#ff32"
         android:layout_toLeftOf="@id/desc"
+        android:layout_alignParentRight="false"
 
 
         />

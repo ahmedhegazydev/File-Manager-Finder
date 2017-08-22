@@ -31,6 +31,14 @@
 android:id="@+id/fileFinderListView"
         />
     <item
+        android:title="Select All"
+        android:id="@+id/folderSelectAll"
+        />
+    <item
+        android:title="Deselct All"
+        android:id="@+id/folderDeselectAll"
+        />
+    <item
         android:title="Set As Home"
         android:id="@+id/fileFinderSetAsHome"
         />

@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -20,7 +21,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -35,20 +35,25 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URLConnection;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import info.androidhive.navigationdrawer.R;
-import info.androidhive.navigationdrawer.adapters.ListViewAdapterImages;
+import info.androidhive.navigationdrawer.adapters.ListViewAdapterAudio;
 import info.androidhive.navigationdrawer.db.DbController;
 import info.androidhive.navigationdrawer.model.FileUtils;
 import info.androidhive.navigationdrawer.model.LstViewImageItem;
@@ -57,18 +62,18 @@ import info.androidhive.navigationdrawer.model.LstViewImageItem;
  * Created by ahmed on 16/08/17.
  */
 
-public class FragmentImages extends Fragment implements ListView.OnItemClickListener {
+public class FragmentAudio extends Fragment implements ListView.OnItemClickListener {
 
     View viewRoot = null;
     Context context = null;
-    @BindView(R.id.lvFragImages)
+    @BindView(R.id.lvFragAudio)
     ListView listView;
-    ListViewAdapterImages listViewAdapterImages = null;
+    ListViewAdapterAudio ListViewAdapterAudio = null;
     ArrayList<LstViewImageItem> listImages = new ArrayList<LstViewImageItem>();
     ArrayList<File> listFiles = new ArrayList<File>();
     List<String> tFileList = new ArrayList<String>();
     private String SD_CARD_ROOT;
-    @BindView(R.id.fragImages)
+    @BindView(R.id.fragAudio)
     RelativeLayout relativeLayout;
     int lstOrGridVisibileNow = 0;//default listview
     FloatingActionButton fabMenuGreen = null;
@@ -79,31 +84,31 @@ public class FragmentImages extends Fragment implements ListView.OnItemClickList
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+        //getting the main view
+        viewRoot = inflater.inflate(R.layout.fragment_audios, container, false);
 
-        viewRoot = inflater.inflate(R.layout.fragment_images, container, false);
+        //getting the base context
         context = getActivity();
         context = container.getContext();
         context = getContext();
 
-        setHasOptionsMenu(true);
         dbController = new DbController(context);
-        ButterKnife.bind(this, viewRoot);
 
+        setHasOptionsMenu(true);
+        ButterKnife.bind(this, viewRoot);
         //relativeLayout.addView(inflateFabMenuGreen(context));
         //fireToast("images fragment");
-
         //getting the path of external sd card for getting all images from there
         File mFile = Environment.getExternalStorageDirectory();
         SD_CARD_ROOT = Environment.getExternalStorageDirectory().getAbsolutePath();
         SD_CARD_ROOT = mFile.toString();
-
-        //getting all images by executing the async task
-
-        new AsyncTastGetAllImages(context).execute(SD_CARD_ROOT);
-        listViewAdapterImages = new ListViewAdapterImages(context, listImages, 0, false);
-        listView.setAdapter(listViewAdapterImages);
+        
+        //getting all audio files  by executing the async task
+        new AsyncTastGetAllAudio(context).execute(SD_CARD_ROOT);
+        ListViewAdapterAudio = new ListViewAdapterAudio(context, listImages, 0, false);
+        listView.setAdapter(ListViewAdapterAudio);
         listView.setOnItemClickListener(this);
-        listViewAdapterImages.notifyDataSetChanged();
+        ListViewAdapterAudio.notifyDataSetChanged();
 
         return viewRoot;
     }
@@ -162,14 +167,14 @@ public class FragmentImages extends Fragment implements ListView.OnItemClickList
 
         Resources resources = getActivity().getResources();
         // array of valid image file extensions
-        String[] imageTypes = resources.getStringArray(R.array.image);
+        String[] imageTypes = resources.getStringArray(R.array.audio);
 
         FilenameFilter[] filter = new FilenameFilter[imageTypes.length];
         int i = 0;
         for (final String type : imageTypes) {
             filter[i] = new FilenameFilter() {
                 public boolean accept(File dir, String name) {
-                    return name.endsWith("." + type);
+                    return name.endsWith("." + type) || name.endsWith("." + type.toUpperCase());
                 }
             };
             i++;
@@ -181,25 +186,25 @@ public class FragmentImages extends Fragment implements ListView.OnItemClickList
             tFileList.add(f.getAbsolutePath());
             listFiles.add(f);
         }
-
-        //Log.i("paths", tFileList.toString());
+        //fireToast(tFileList.size()+"");
+        Log.e("paths", tFileList.toString());
 
         return tFileList;
     }
 
-    class AsyncTastGetAllImages extends AsyncTask<String, Void, ArrayList<LstViewImageItem>> {
+    class AsyncTastGetAllAudio extends AsyncTask<String, Void, ArrayList<LstViewImageItem>> {
 
         Context context = null;
         ProgressDialog dialog = null;
 
 
-        AsyncTastGetAllImages(Context context) {
+        AsyncTastGetAllAudio(Context context) {
             this.context = context;
             dialog = new ProgressDialog(this.context);
             dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             dialog.setTitle("Please Wait");
             dialog.setCancelable(false);
-            dialog.setMessage("Getting all images ... ");
+            dialog.setMessage("Getting all audio ... ");
             dialog.setIndeterminate(true);
 
         }
@@ -216,6 +221,7 @@ public class FragmentImages extends Fragment implements ListView.OnItemClickList
         @Override
         protected ArrayList<LstViewImageItem> doInBackground(String... params) {
             findFiles();
+            //getPlayList();
             for (int i = 0; i < listFiles.size(); i++) {
                 File file = listFiles.get(i);
                 String imgName = "";
@@ -230,10 +236,12 @@ public class FragmentImages extends Fragment implements ListView.OnItemClickList
                 NumberFormat formatter = new DecimalFormat("#0.00");
                 imgSize = formatter.format(kilobytes);
                 imgCreationDate = getCreationDateForFile(file.getAbsolutePath());//image creation date or last modification date
-                imgPath = tFileList.get(i);//image uri
+                //imgPath = tFileList.get(i);//image uri
+                imgPath = file.getAbsolutePath();
 
                 LstViewImageItem lstViewImageItem = new
                         LstViewImageItem(imgPath, imgName, setFormatForDate(imgCreationDate), imgSize);
+
                 listImages.add(lstViewImageItem);
 
             }
@@ -247,16 +255,78 @@ public class FragmentImages extends Fragment implements ListView.OnItemClickList
 
             listImages = lstViewImageItems;
 
+            //fireToast(listImages.size()+"");
+
             if (dialog.isShowing())
                 dialog.dismiss();
 
             if (!lstViewImageItems.isEmpty() && !lstViewImageItems.equals(null)) {
-                listViewAdapterImages.notifyDataSetChanged();
+                ListViewAdapterAudio.notifyDataSetChanged();
             }
 
 
         }
     }
+
+
+    final String MEDIA_PATH = Environment.getExternalStorageDirectory()
+            .getPath() + "/";
+    private ArrayList<HashMap<String, String>> songsList = new ArrayList<HashMap<String, String>>();
+    private String mp3Pattern = ".mp3";
+
+    public ArrayList<HashMap<String, String>> getPlayList() {
+        //System.out.println(MEDIA_PATH);
+        if (MEDIA_PATH != null) {
+            File home = new File(MEDIA_PATH);
+            File[] listFiles = home.listFiles();
+            if (listFiles != null && listFiles.length > 0) {
+                for (File file : listFiles) {
+                    //System.out.println(file.getAbsolutePath());
+                    if (file.isDirectory()) {
+                        scanDirectory(file);
+                    } else {
+                        addSongToList(file);
+                    }
+                }
+            }
+        }
+        // return songs list array
+        return songsList;
+    }
+
+    private void scanDirectory(File directory) {
+        if (directory != null) {
+            File[] listFiles = directory.listFiles();
+            if (listFiles != null && listFiles.length > 0) {
+                for (File file : listFiles) {
+                    if (file.isDirectory()) {
+                        scanDirectory(file);
+                    } else {
+                        addSongToList(file);
+                    }
+
+                }
+            }
+        }
+    }
+
+    private void addSongToList(File song) {
+        if (song.getName().endsWith(mp3Pattern)) {
+            HashMap<String, String> songMap = new HashMap<String, String>();
+            songMap.put("songTitle",
+                    song.getName().substring(0, (song.getName().length() - 4)));
+            songMap.put("songPath", song.getPath());
+
+            //////////////////
+            listFiles.add(song);
+            /////////////////
+
+
+            // Adding each song to SongList
+            songsList.add(songMap);
+        }
+    }
+
 
     LstViewImageItem item = null;
     File file = null;
@@ -269,21 +339,41 @@ public class FragmentImages extends Fragment implements ListView.OnItemClickList
         //--------------------------------------------------------------
         setPopUpMenu(view);
         //-------------------------------------------------------
-        showTheFileUsingExistingApps();
+        //play the selected file
+        playAudio();
 
     }
 
-    private void showTheFileUsingExistingApps() {
-        Uri uri =  Uri.fromFile(file);
-        Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
-        String mime = "*/*";
-        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
-        if (mimeTypeMap.hasExtension(
-                mimeTypeMap.getFileExtensionFromUrl(uri.toString())))
-            mime = mimeTypeMap.getMimeTypeFromExtension(
-                    mimeTypeMap.getFileExtensionFromUrl(uri.toString()));
-        intent.setDataAndType(uri,mime);
+    MediaPlayer mediaPlayer = null;
+    ArrayList<MediaPlayer> mediaPlayers = new ArrayList<MediaPlayer>();
+    private void playAudio() {
+
+
+
+        Intent intent = new Intent();
+        intent.setAction(android.content.Intent.ACTION_VIEW);
+        File file = new File(this.file.getAbsolutePath());
+        intent.setDataAndType(Uri.fromFile(file), "audio/*");
         startActivity(intent);
+
+
+//        try {
+            //stopping the prev played media players
+//            for (int  i = 0; i < mediaPlayers.size(); i++){
+//                mediaPlayers.get(i).reset();
+//            }
+//            //String filePath = Environment.getExternalStorageDirectory()+"/yourfolderNAme/yopurfile.mp3";
+//            mediaPlayer = new MediaPlayer();
+//            mediaPlayer.setDataSource(file.getAbsolutePath());
+//            mediaPlayer.prepare();
+//            mediaPlayer.start();
+//
+//            mediaPlayers.add(mediaPlayer);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }finally {
+//
+//        }
     }
 
 
@@ -300,7 +390,11 @@ public class FragmentImages extends Fragment implements ListView.OnItemClickList
                         break;
                     case R.id.folderCopy:
                         //fireToast("copy");
-                        fileCopy();
+                        try {
+                            fileCopy(null, null);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                         break;
                     case R.id.folderCut:
                         fileCut();
@@ -339,9 +433,24 @@ public class FragmentImages extends Fragment implements ListView.OnItemClickList
         }
 
     }
+    public void fileCopy(File src, File dst) throws IOException {
 
-    private void fileCopy() {
-
+        InputStream in = new FileInputStream(src);
+        try {
+            OutputStream out = new FileOutputStream(dst);
+            try {
+                // Transfer bytes from in to out
+                byte[] buf = new byte[1024];
+                int len;
+                while ((len = in.read(buf)) > 0) {
+                    out.write(buf, 0, len);
+                }
+            } finally {
+                out.close();
+            }
+        } finally {
+            in.close();
+        }
     }
 
     private void fileCut() {
@@ -393,7 +502,7 @@ public class FragmentImages extends Fragment implements ListView.OnItemClickList
                             Log.e("ah", file2.getAbsolutePath());
                             if (file2.exists())
                                 try {
-                                    throw new java.io.IOException("file exists");
+                                    throw new IOException("file exists");
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
@@ -492,17 +601,17 @@ public class FragmentImages extends Fragment implements ListView.OnItemClickList
     private void searchForFile(String s) {
         listFiles.clear();
         listImages.clear();
-        AsyncSearchForImage searchForImage = new AsyncSearchForImage(context);
+        AsyncSearchForAudio searchForImage = new AsyncSearchForAudio(context);
         searchForImage.execute(s);
 
     }
 
-    class AsyncSearchForImage extends AsyncTask<String, Void, ArrayList<LstViewImageItem>> {
+    class AsyncSearchForAudio extends AsyncTask<String, Void, ArrayList<LstViewImageItem>> {
 
         Context context = null;
         ProgressDialog dialog = null;
 
-        public AsyncSearchForImage(Context context) {
+        public AsyncSearchForAudio(Context context) {
             this.context = context;
             dialog = new ProgressDialog(this.context);
             dialog.setMessage("Searching for ...");
@@ -573,9 +682,9 @@ public class FragmentImages extends Fragment implements ListView.OnItemClickList
             if (list.isEmpty()) {
                 fireToast("No results found");
             }
-            listViewAdapterImages = new ListViewAdapterImages(context, list, 0, false);//0 for listview
-            listView.setAdapter(listViewAdapterImages);
-            listViewAdapterImages.notifyDataSetChanged();
+            ListViewAdapterAudio = new ListViewAdapterAudio(context, list, 0, false);//0 for listview
+            listView.setAdapter(ListViewAdapterAudio);
+            ListViewAdapterAudio.notifyDataSetChanged();
 
 
         }
@@ -599,10 +708,10 @@ public class FragmentImages extends Fragment implements ListView.OnItemClickList
 
             listFiles.clear();
             listImages.clear();
-            listViewAdapterImages = new ListViewAdapterImages(context, listImages, 0, false);//0 for listview
-            lv.setAdapter(listViewAdapterImages);
-            new AsyncTastGetAllImages(context).execute(SD_CARD_ROOT);
-            //listViewAdapterImages.notifyDataSetChanged();
+            ListViewAdapterAudio = new ListViewAdapterAudio(context, listImages, 0, false);//0 for listview
+            lv.setAdapter(ListViewAdapterAudio);
+            new AsyncTastGetAllAudio(context).execute(SD_CARD_ROOT);
+            //ListViewAdapterAudio.notifyDataSetChanged();
 
             locker = false;
             toggle2 = true;
@@ -616,10 +725,10 @@ public class FragmentImages extends Fragment implements ListView.OnItemClickList
 
             listFiles.clear();
             listImages.clear();
-            listViewAdapterImages = new ListViewAdapterImages(context, listImages, 1, false);//1 for gridview
-            gv.setAdapter(listViewAdapterImages);
-            new AsyncTastGetAllImages(context).execute(SD_CARD_ROOT);
-            listViewAdapterImages.notifyDataSetChanged();
+            ListViewAdapterAudio = new ListViewAdapterAudio(context, listImages, 1, false);//1 for gridview
+            gv.setAdapter(ListViewAdapterAudio);
+            new AsyncTastGetAllAudio(context).execute(SD_CARD_ROOT);
+            ListViewAdapterAudio.notifyDataSetChanged();
 
             locker = false;
             toggle2 = false;
@@ -647,9 +756,9 @@ public class FragmentImages extends Fragment implements ListView.OnItemClickList
 
                 listFiles.clear();
                 listImages.clear();
-                listViewAdapterImages = new ListViewAdapterImages(context, listImages, 0, false);//1 for gridview
-                lv.setAdapter(listViewAdapterImages);
-                new AsyncTastGetAllImages(context).execute(SD_CARD_ROOT);
+                ListViewAdapterAudio = new ListViewAdapterAudio(context, listImages, 0, false);//1 for gridview
+                lv.setAdapter(ListViewAdapterAudio);
+                new AsyncTastGetAllAudio(context).execute(SD_CARD_ROOT);
                 lstOrGridVisibileNow = 0;
 
                 locker = true;
@@ -668,9 +777,9 @@ public class FragmentImages extends Fragment implements ListView.OnItemClickList
 
                 listFiles.clear();
                 listImages.clear();
-                listViewAdapterImages = new ListViewAdapterImages(context, listImages, 1, false);//1 for gridview
-                gv.setAdapter(listViewAdapterImages);
-                new AsyncTastGetAllImages(context).execute(SD_CARD_ROOT);
+                ListViewAdapterAudio = new ListViewAdapterAudio(context, listImages, 1, false);//1 for gridview
+                gv.setAdapter(ListViewAdapterAudio);
+                new AsyncTastGetAllAudio(context).execute(SD_CARD_ROOT);
                 lstOrGridVisibileNow = 1;
 
                 locker = true;
@@ -697,10 +806,10 @@ public class FragmentImages extends Fragment implements ListView.OnItemClickList
 
                     listFiles.clear();
                     listImages.clear();
-                    listViewAdapterImages = new ListViewAdapterImages(context, listImages, 0, true);//1 for gridview
-                    lv.setAdapter(listViewAdapterImages);
-                    new AsyncTastGetAllImages(context).execute(SD_CARD_ROOT);
-                    listViewAdapterImages.notifyDataSetChanged();
+                    ListViewAdapterAudio = new ListViewAdapterAudio(context, listImages, 0, true);//1 for gridview
+                    lv.setAdapter(ListViewAdapterAudio);
+                    new AsyncTastGetAllAudio(context).execute(SD_CARD_ROOT);
+                    ListViewAdapterAudio.notifyDataSetChanged();
 
                     locker = false;
                     toggle2 = true;
@@ -714,10 +823,10 @@ public class FragmentImages extends Fragment implements ListView.OnItemClickList
 
                     listFiles.clear();
                     listImages.clear();
-                    listViewAdapterImages = new ListViewAdapterImages(context, listImages, 1, true);//1 for gridview
-                    gv.setAdapter(listViewAdapterImages);
-                    new AsyncTastGetAllImages(context).execute(SD_CARD_ROOT);
-                    listViewAdapterImages.notifyDataSetChanged();
+                    ListViewAdapterAudio = new ListViewAdapterAudio(context, listImages, 1, true);//1 for gridview
+                    gv.setAdapter(ListViewAdapterAudio);
+                    new AsyncTastGetAllAudio(context).execute(SD_CARD_ROOT);
+                    ListViewAdapterAudio.notifyDataSetChanged();
 
                     locker = false;
                     toggle2 = false;
@@ -735,10 +844,10 @@ public class FragmentImages extends Fragment implements ListView.OnItemClickList
 
                     listFiles.clear();
                     listImages.clear();
-                    listViewAdapterImages = new ListViewAdapterImages(context, listImages, 0, false);//1 for gridview
-                    lv.setAdapter(listViewAdapterImages);
-                    new AsyncTastGetAllImages(context).execute(SD_CARD_ROOT);
-                    listViewAdapterImages.notifyDataSetChanged();
+                    ListViewAdapterAudio = new ListViewAdapterAudio(context, listImages, 0, false);//1 for gridview
+                    lv.setAdapter(ListViewAdapterAudio);
+                    new AsyncTastGetAllAudio(context).execute(SD_CARD_ROOT);
+                    ListViewAdapterAudio.notifyDataSetChanged();
 
                     locker = true;
                     toggle = true;
@@ -752,10 +861,10 @@ public class FragmentImages extends Fragment implements ListView.OnItemClickList
 
                     listFiles.clear();
                     listImages.clear();
-                    listViewAdapterImages = new ListViewAdapterImages(context, listImages, 1, false);//1 for gridview
-                    gv.setAdapter(listViewAdapterImages);
-                    new AsyncTastGetAllImages(context).execute(SD_CARD_ROOT);
-                    listViewAdapterImages.notifyDataSetChanged();
+                    ListViewAdapterAudio = new ListViewAdapterAudio(context, listImages, 1, false);//1 for gridview
+                    gv.setAdapter(ListViewAdapterAudio);
+                    new AsyncTastGetAllAudio(context).execute(SD_CARD_ROOT);
+                    ListViewAdapterAudio.notifyDataSetChanged();
 
                     locker = toggle = true;//for reinit the menu
 
@@ -1019,9 +1128,9 @@ public class FragmentImages extends Fragment implements ListView.OnItemClickList
             if (dialog.isShowing())
                 dialog.dismiss();
 
-            listViewAdapterImages = new ListViewAdapterImages(context, list, 0, false);//0 for listview
-            lv.setAdapter(listViewAdapterImages);
-            listViewAdapterImages.notifyDataSetChanged();
+            ListViewAdapterAudio = new ListViewAdapterAudio(context, list, 0, false);//0 for listview
+            lv.setAdapter(ListViewAdapterAudio);
+            ListViewAdapterAudio.notifyDataSetChanged();
 
         }
     }
@@ -1090,9 +1199,9 @@ public class FragmentImages extends Fragment implements ListView.OnItemClickList
             if (dialog.isShowing())
                 dialog.dismiss();
 
-            listViewAdapterImages = new ListViewAdapterImages(context, list, 0, false);//0 for listview
-            lv.setAdapter(listViewAdapterImages);
-            listViewAdapterImages.notifyDataSetChanged();
+            ListViewAdapterAudio = new ListViewAdapterAudio(context, list, 0, false);//0 for listview
+            lv.setAdapter(ListViewAdapterAudio);
+            ListViewAdapterAudio.notifyDataSetChanged();
 
         }
     }

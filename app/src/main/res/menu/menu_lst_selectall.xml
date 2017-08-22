@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-    <item
-        android:title="Home"
-        android:id="@+id/fileFinderHome"
-        />
+    <!--<item-->
+        <!--android:title="Home"-->
+        <!--android:id="@+id/fileFinderHome"-->
+        <!--/>-->
     <item
         android:title="Sort"
         android:id="@+id/fileFinderSort"
@@ -22,26 +22,39 @@
                 />
         </menu>
     </item>
-    <item
-        android:title="History"
-        android:id="@+id/fileFinderHistory"
-        />
+    <!--<item-->
+        <!--android:title="History"-->
+        <!--android:id="@+id/fileFinderHistory"-->
+        <!--/>-->
     <item
         android:title="GridView"
         android:id="@+id/fileFinderGridView"
         />
+    <!--<item-->
+        <!--android:title="Select All"-->
+        <!--android:id="@+id/folderSelectAll"-->
+        <!--/>-->
     <item
-        android:title="Select All"
-        android:id="@+id/folderSelectAll"
-        />
-    <item
-        android:title="Deselct All"
+        android:title="Deselect All"
         android:id="@+id/folderDeselectAll"
         />
+    <!--<item-->
+        <!--android:title="Set As Home"-->
+        <!--android:id="@+id/fileFinderSetAsHome"-->
+        <!--/>-->
     <item
-        android:title="Set As Home"
-        android:id="@+id/fileFinderSetAsHome"
+        android:title="Delete All"
+        android:id="@+id/allDelete"
         />
+    <item
+        android:title="Cut All"
+        android:id="@+id/allCut"
+        />
+    <item
+        android:title="Copy All"
+        android:id="@+id/allCopy"
+        />
+
     <item
         android:title="Exit"
         android:id="@+id/fileFinderExit"

@@ -12,14 +12,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/fragImages"
+        android:id="@+id/fragAudio"
         >
         <ListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:dividerHeight="2dp"
             android:divider="@android:color/darker_gray"
-            android:id="@+id/lvFragImages"
+            android:id="@+id/lvFragAudio"
             android:footerDividersEnabled="true"
             android:headerDividersEnabled="true"
             android:layout_margin="5dp"

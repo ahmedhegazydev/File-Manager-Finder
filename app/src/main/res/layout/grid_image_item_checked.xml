@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#3434"
+    android:orientation="vertical">
+
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/cbGrid"
+        android:layout_margin="5dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+
+android:checked="true"
+        />
+    <ImageView
+        android:id="@+id/ivThumbnail"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="false"
+        android:layout_alignParentLeft="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg_circle"
+        android:layout_margin="10dp"
+        />
+
+    <TextView
+        android:id="@+id/tvImageName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ivThumbnail"
+        android:layout_centerHorizontal="true"
+        android:text="Image file name .jpg"
+        android:textColor="@color/colorAccent"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:padding="2dp"
+        />
+
+    <TextView
+        android:id="@+id/tvCreationDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvImageName"
+        android:layout_centerHorizontal="true"
+        android:text="Aug , 12, 2017"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        android:padding="2dp"
+        />
+
+    <TextView
+        android:id="@+id/tvImageSize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvCreationDate"
+        android:layout_centerHorizontal="true"
+        android:text="12.3kb"
+        android:textSize="10sp"
+        android:textStyle="bold|italic"
+        android:padding="2dp"
+        />
+
+</RelativeLayout>

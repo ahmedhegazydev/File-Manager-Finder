@@ -28,7 +28,7 @@
         <item>Audio</item>
         <item>Docs</item>
         <item>Apks</item>
-        <item>Quick Access</item>
+        <item>Quick Access/History</item>
         <item>Recent Files</item>
 
     </string-array>
@@ -58,6 +58,28 @@
         <item>xpm</item>
         <item>xwd</item>
     </string-array>
+
+    <string-array name="audio">
+        <item>pcm</item>
+        <item>wav</item>
+        <item>aiff</item>
+        <item>mp3</item>
+        <item>aac</item>
+        <item>ogg</item>
+        <item>wma</item>
+        <item>flac</item>
+        <item>alac</item>
+    </string-array>
+
+    <string-array name="video">
+        <item>3gp</item>
+        <item>mp4</item>
+        <item>ts</item>
+        <item>webm</item>
+        <item>mkv</item>
+
+    </string-array>
+
 
     <string name="activity_title_about_us">About Us</string>
     <string name="activity_title_privacy_policy">Privacy Policy</string>

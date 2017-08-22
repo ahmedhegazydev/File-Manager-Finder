@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.github.clans.fab.FloatingActionMenu android:id="@+id/fabMenuGreen"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentRight="true"
+    android:layout_marginRight="10dp"
+    android:layout_marginBottom="10dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginTop="10dp"
+    fab:menu_icon="@drawable/ic_star"
+    fab:menu_animationDelayPerItem="0"
+    fab:menu_colorNormal="#43A047"
+    fab:menu_colorPressed="#2E7D32"
+    fab:menu_colorRipple="#1B5E20"
+    fab:menu_labels_maxLines="2"
+    fab:menu_labels_ellipsize="end"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto">
+
+    <com.github.clans.fab.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_edit"
+        fab:fab_label="Create Folder"
+        android:id="@+id/fabCreateFolder"
+        style="@style/MenuButtonsSmall.Green" />
+
+    <com.github.clans.fab.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_edit"
+        fab:fab_label="Create File"
+        android:id="@+id/fabCreateFile"
+        style="@style/MenuButtonsSmall.Green" />
+
+    <!--<com.github.clans.fab.FloatingActionButton-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:src="@drawable/ic_edit"-->
+    <!--fab:fab_label="Menu item 3"-->
+    <!--style="@style/MenuButtonsSmall.Green" />-->
+
+</com.github.clans.fab.FloatingActionMenu>

@@ -487,15 +487,15 @@ public class FragmentForAnyPath extends android.support.v4.app.Fragment implemen
                 getActivity().finish();
 
                 break;
-            case R.id.fileFinderHistory:
-                break;
-            case R.id.fileFinderListView:
-                mainContainer.removeAllViews();
-                mainContainer.addView(createListView());
-                break;
-            case R.id.fileFinderSetAsHome:
-                setSharedPref();
-                break;
+//            case R.id.fileFinderHistory:
+//                break;
+//            case R.id.fileFinderListView:
+//                mainContainer.removeAllViews();
+//                mainContainer.addView(createListView());
+//                break;
+//            case R.id.fileFinderSetAsHome:
+//                setSharedPref();
+//                break;
             case R.id.fileFinderGridView:
                 mainContainer.removeAllViews();
                 mainContainer.addView(createGridView());
@@ -504,9 +504,9 @@ public class FragmentForAnyPath extends android.support.v4.app.Fragment implemen
                 break;
             case R.id.direcSortMode:
                 break;
-            case R.id.fileFinderHome:
-                getHomePath();
-                break;
+//            case R.id.fileFinderHome:
+//                getHomePath();
+//                break;
             default:
                 break;
 

@@ -5,14 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import info.androidhive.navigationdrawer.R;
@@ -22,7 +19,7 @@ import info.androidhive.navigationdrawer.model.LstViewImageItem;
  * Created by ahmed on 16/08/17.
  */
 
-public class ListViewAdapterImages extends BaseAdapter {
+public class ListViewAdapterVideo extends BaseAdapter {
 
     Context context = null;
     ArrayList<LstViewImageItem> list = new ArrayList<LstViewImageItem>();
@@ -30,7 +27,7 @@ public class ListViewAdapterImages extends BaseAdapter {
     boolean checkedOrNot = false;
 
 
-    public ListViewAdapterImages(Context context, ArrayList<LstViewImageItem> list, int listOrGrid, boolean checkedOrNot) {
+    public ListViewAdapterVideo(Context context, ArrayList<LstViewImageItem> list, int listOrGrid, boolean checkedOrNot) {
         this.context = context;
         this.list = list;
         this.listOrGrid = listOrGrid;
@@ -71,6 +68,8 @@ public class ListViewAdapterImages extends BaseAdapter {
 
 
         ImageView ivThumbnail = (ImageView) view1.findViewById(R.id.ivThumbnail);
+        //ivThumbnail.setImageResource(R.drawable.audio);
+
         TextView tvImageName = null;
         TextView tvImageSize = null;
         TextView tvImageCreationDate = null;
@@ -91,7 +90,7 @@ public class ListViewAdapterImages extends BaseAdapter {
 
 
         tvImageName.setText(shortenNameLen(lstViewImageItem.getImgName().toString()));
-        Picasso.with(context).load(new File(lstViewImageItem.getImgUri())).into(ivThumbnail);
+        Picasso.with(context).load(R.drawable.video).into(ivThumbnail);
         tvImageCreationDate.setText(lstViewImageItem.getImgCreationDate());
         tvImageSize.setText(lstViewImageItem.getImgSizeKb()+"KB");
 //        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

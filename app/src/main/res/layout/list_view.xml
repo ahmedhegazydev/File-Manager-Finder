@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ListView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:dividerHeight="2dp"
+    android:divider="@android:color/darker_gray"
+    android:id="@+id/lvFragImages"
+    android:footerDividersEnabled="true"
+    android:headerDividersEnabled="true"
+    android:layout_margin="5dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+</ListView>
